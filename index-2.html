@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="ht"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Italien Top Up</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: dark gaming storefront. Full-bleed gem backdrop, centered column, pack grid, checkout panel, profile tab. */
+:root {
+  --bg: #0a0b1e;
+  --bg2: #12143a;
+  --surface: rgba(24, 27, 66, .72);
+  --surface-solid: #181b42;
+  --line: rgba(140, 150, 255, .22);
+  --fg: #f2f3ff;
+  --muted: #a3a8d6;
+  --accent: #28e0ff;
+  --accent-ink: #04202a;
+  --gold: #ffc247;
+  --gold-ink: #2b1a00;
+  --ok: #3de08a;
+  --warn: #ffb020;
+  --bad: #ff6b81;
+  --font-display: "Unbounded", "Trebuchet MS", system-ui, sans-serif;
+  --font-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 16px 40px;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+.backdrop { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  background:
+    radial-gradient(900px 600px at 85% -10%, rgba(40, 224, 255, .22), transparent 60%),
+    radial-gradient(800px 700px at -10% 30%, rgba(150, 80, 255, .28), transparent 60%),
+    radial-gradient(700px 500px at 60% 110%, rgba(255, 194, 71, .16), transparent 60%),
+    linear-gradient(180deg, var(--bg2), var(--bg) 60%);
+}
+.backdrop svg { position: absolute; width: 100%; height: 100%; }
+.wrap { position: relative; z-index: 1; max-width: 1040px; margin: 0 auto; }
+a { color: var(--accent); }
+button { font: inherit; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* header */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding: 6px 0 18px; }
+.brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.brand svg { flex: none; }
+.brand b { font-family: var(--font-display); font-weight: 800; font-size: 19px; letter-spacing: .01em; }
+.brand small { display: block; color: var(--muted); font-size: 12px; letter-spacing: .06em; }
+.tabs { display: flex; gap: 6px; background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 4px; }
+.tabs button { border: 0; background: transparent; color: var(--muted); padding: 8px 16px; border-radius: 999px; font-weight: 600; }
+.tabs button[aria-selected="true"] { background: var(--accent); color: var(--accent-ink); }
+
+/* hero */
+.hero { padding: 18px 0 8px; }
+.chip { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 6px 12px; font-size: 13px; color: var(--muted); }
+.chip i { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 10px var(--ok); }
+h1 { font-family: var(--font-display); font-weight: 800; font-size: clamp(30px, 7vw, 54px); line-height: 1.08; margin: 16px 0 12px; text-wrap: balance; max-width: 18ch; }
+h1 em { font-style: normal; color: var(--accent); }
+.lead { color: var(--muted); max-width: 52ch; font-size: 17px; margin: 0 0 20px; }
+.promo { display: flex; gap: 14px; align-items: center; background: linear-gradient(100deg, rgba(255, 194, 71, .2), rgba(255, 194, 71, .05)); border: 1px solid rgba(255, 194, 71, .5); border-radius: 18px; padding: 14px 16px; margin: 6px 0 4px; }
+.promo svg { flex: none; }
+.promo p { margin: 0; font-weight: 600; }
+.promo p span { color: var(--gold); }
+
+h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(20px, 4.5vw, 28px); margin: 34px 0 6px; text-wrap: balance; }
+.sub { color: var(--muted); margin: 0 0 18px; }
+
+/* packs */
+.packs { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+.pack { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: 18px; display: flex; flex-direction: column; gap: 4px; backdrop-filter: blur(6px); transition: transform .2s, border-color .2s; min-width: 0; }
+.pack:hover { transform: translateY(-3px); border-color: var(--accent); }
+.pack[data-best="1"] { border-color: var(--gold); }
+.tag { position: absolute; top: 14px; right: 14px; background: var(--gold); color: var(--gold-ink); font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 999px; letter-spacing: .04em; }
+.pack .gem { margin-bottom: 8px; }
+.pack .num { font-family: var(--font-display); font-weight: 800; font-size: 34px; line-height: 1; font-variant-numeric: tabular-nums; }
+.pack .unit { color: var(--muted); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 10px; }
+.pack .price { font-size: 22px; font-weight: 700; color: var(--gold); font-variant-numeric: tabular-nums; }
+.pack .rate { color: var(--muted); font-size: 13px; margin-bottom: 14px; font-variant-numeric: tabular-nums; }
+.btn { border: 0; border-radius: 14px; padding: 12px 18px; font-weight: 700; background: var(--accent); color: var(--accent-ink); transition: filter .15s, transform .15s; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.btn:hover { filter: brightness(1.1); }
+.btn:active { transform: scale(.98); }
+.btn.gold { background: var(--gold); color: var(--gold-ink); }
+.btn.ghost { background: transparent; color: var(--fg); border: 1px solid var(--line); }
+.btn.wa { background: #25d366; color: #052e14; }
+.pack .btn { margin-top: auto; }
+
+/* checkout */
+.panel { background: var(--surface-solid); border: 1px solid var(--line); border-radius: 24px; padding: 20px; margin-top: 26px; }
+.checkout-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+@media (max-width: 760px) { .checkout-grid { grid-template-columns: 1fr; } }
+.summary { display: flex; align-items: center; gap: 14px; background: rgba(40, 224, 255, .08); border: 1px solid rgba(40, 224, 255, .35); border-radius: 18px; padding: 14px; margin-bottom: 16px; }
+.summary b { font-family: var(--font-display); font-size: 22px; }
+.summary span { color: var(--gold); font-weight: 700; display: block; }
+label { display: block; font-weight: 600; font-size: 14px; margin: 14px 0 6px; }
+label small { color: var(--muted); font-weight: 400; }
+input { width: 100%; background: rgba(8, 9, 30, .8); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; color: var(--fg); font: inherit; min-width: 0; }
+input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px rgba(40, 224, 255, .2); }
+.drop { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; min-height: 110px; margin: 0; padding: 14px; border: 2px dashed var(--line); border-radius: 14px; background: rgba(8, 9, 30, .6); color: var(--muted); font-weight: 600; text-align: center; cursor: pointer; transition: border-color .2s; }
+.drop:hover, .drop:focus-within { border-color: var(--accent); color: var(--fg); }
+.drop img { max-width: 100%; max-height: 220px; border-radius: 10px; }
+.thumb { grid-column: 1 / -1; justify-self: start; max-width: 100%; max-height: 150px; border-radius: 10px; margin-top: 6px; border: 1px solid var(--line); }
+.err { color: var(--bad); font-size: 13px; min-height: 18px; margin: 6px 0 0; }
+.steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; counter-reset: s; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 30px 1fr; gap: 10px; }
+.steps li::before { content: counter(s); width: 30px; height: 30px; border-radius: 50%; background: var(--gold); color: var(--gold-ink); font-weight: 800; display: grid; place-items: center; }
+.numbox { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; background: rgba(255, 194, 71, .1); border: 1px dashed var(--gold); border-radius: 14px; padding: 10px 12px; margin-top: 8px; }
+.numbox code { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--gold); letter-spacing: .04em; user-select: all; }
+.numbox button { margin-left: auto; padding: 8px 12px; font-size: 13px; }
+.done { text-align: center; padding: 10px 0 4px; }
+.done h3 { font-family: var(--font-display); margin: 12px 0 6px; font-size: 22px; }
+.thanks { background: linear-gradient(100deg, rgba(255, 194, 71, .2), rgba(255, 194, 71, .06)); border: 1px solid rgba(255, 194, 71, .5); border-radius: 16px; padding: 14px; margin: 14px auto; max-width: 520px; font-weight: 600; text-align: left; }
+.row-btns { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-top: 12px; }
+
+/* info cards */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 18px; min-width: 0; }
+.card h3 { margin: 0 0 6px; font-size: 18px; }
+.card p { color: var(--muted); margin: 0 0 14px; }
+
+/* profile */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 18px; }
+.stat { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 14px 16px; }
+.stat b { display: block; font-family: var(--font-display); font-size: 26px; font-variant-numeric: tabular-nums; }
+.stat span { color: var(--muted); font-size: 13px; }
+.bar { height: 12px; border-radius: 99px; background: rgba(255, 255, 255, .08); overflow: hidden; margin: 10px 0 6px; }
+.bar i { display: block; height: 100%; background: linear-gradient(90deg, var(--accent), var(--gold)); border-radius: 99px; }
+.orders { display: grid; gap: 10px; margin-top: 14px; }
+.order { background: var(--surface); border: 1px solid var(--line); border-radius: 16px; padding: 14px; display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; align-items: center; min-width: 0; }
+.order b { font-variant-numeric: tabular-nums; }
+.order small { color: var(--muted); overflow-wrap: anywhere; }
+.pill { font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 999px; background: rgba(255, 176, 32, .16); color: var(--warn); white-space: nowrap; }
+.empty { text-align: center; color: var(--muted); padding: 30px 10px; border: 1px dashed var(--line); border-radius: 18px; }
+
+footer { margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; display: grid; gap: 6px; }
+footer b { color: var(--fg); }
+.toast { position: fixed; left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%) translateY(30px); background: var(--fg); color: var(--bg); padding: 10px 16px; border-radius: 12px; font-weight: 600; opacity: 0; transition: .25s; z-index: 20; pointer-events: none; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+
+<div class="backdrop" aria-hidden="true">
+  <svg viewBox="0 0 1200 900" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#28e0ff" stop-opacity=".55"/><stop offset="1" stop-color="#6a4bff" stop-opacity=".25"/></linearGradient>
+      <linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffc247" stop-opacity=".45"/><stop offset="1" stop-color="#ff5fa2" stop-opacity=".2"/></linearGradient>
+      <filter id="bl"><feGaussianBlur stdDeviation="3"/></filter>
+      <filter id="bl2"><feGaussianBlur stdDeviation="14"/></filter>
+    </defs>
+    <g filter="url(#bl2)" opacity=".7">
+      <polygon points="150,120 330,240 150,460 -30,240" fill="url(#g1)"/>
+      <polygon points="1020,520 1240,660 1020,930 800,660" fill="url(#g2)"/>
+    </g>
+    <g filter="url(#bl)" opacity=".8">
+      <polygon points="930,70 1010,125 930,230 850,125" fill="url(#g1)"/>
+      <polygon points="260,560 330,610 260,700 190,610" fill="url(#g2)"/>
+      <polygon points="620,720 680,760 620,840 560,760" fill="url(#g1)"/>
+    </g>
+    <g fill="none" stroke="#9aa2ff" stroke-opacity=".28" stroke-width="1.2">
+      <polygon points="930,70 1010,125 930,230 850,125"/><line x1="850" y1="125" x2="1010" y2="125"/><line x1="930" y1="70" x2="900" y2="125"/><line x1="930" y1="230" x2="900" y2="125"/>
+      <polygon points="260,560 330,610 260,700 190,610"/><line x1="190" y1="610" x2="330" y2="610"/>
+      <polygon points="620,720 680,760 620,840 560,760"/><line x1="560" y1="760" x2="680" y2="760"/>
+    </g>
+    <g fill="#fff" opacity=".7">
+      <circle cx="120" cy="90" r="2"/><circle cx="480" cy="60" r="1.6"/><circle cx="760" cy="230" r="2"/><circle cx="1110" cy="330" r="1.8"/><circle cx="90" cy="520" r="1.6"/><circle cx="420" cy="410" r="2"/><circle cx="860" cy="610" r="1.8"/><circle cx="1130" cy="820" r="2"/><circle cx="300" cy="840" r="1.6"/><circle cx="700" cy="480" r="1.5"/>
+    </g>
+  </svg>
+</div>
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <svg width="42" height="42" viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#28e0ff"/><stop offset="1" stop-color="#6a4bff"/></linearGradient></defs><polygon points="50,6 92,36 50,94 8,36" fill="url(#lg)"/><polygon points="50,6 70,36 50,94 30,36" fill="#fff" opacity=".22"/><polyline points="8,36 92,36" stroke="#fff" stroke-opacity=".5" stroke-width="2" fill="none"/></svg>
+      <div><b>Italien Top Up</b><small>italientopup.com</small></div>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Navigasyon">
+      <button role="tab" id="tab-shop" aria-selected="true" aria-controls="view-shop">Boutik</button>
+      <button role="tab" id="tab-profile" aria-selected="false" aria-controls="view-profile">Pwofil mwen</button>
+    </nav>
+  </header>
+
+  <main id="view-shop">
+    <section class="hero">
+      <span class="chip"><i></i> Top up Free Fire sèlman · Peman NatCash</span>
+      <h1>Rechaje dyaman <em>Free Fire</em> ou rapid.</h1>
+      <p class="lead">Chwazi pake w la, voye lajan an sou NatCash, mete kòd tranzaksyon an. Nou verifye peman an epi nou rechaje kont ou a.</p>
+      <div class="promo">
+        <svg width="44" height="44" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,6 92,36 50,94 8,36" fill="#ffc247"/><polygon points="50,6 70,36 50,94 30,36" fill="#fff" opacity=".35"/></svg>
+        <p>Mèsi deskèw chwazi nou! Depi w voye <span>20 moun top up</span> pou pi piti <span>500 dyaman</span>, w ap benefisye <span>1000 dyaman</span>.</p>
+      </div>
+    </section>
+
+    <h2>Chwazi pake dyaman ou</h2>
+    <p class="sub">Pri an goud (G). Peman pa NatCash.</p>
+    <div class="packs" id="packs"></div>
+
+    <h2>Pass ak abonnman</h2>
+    <p class="sub">Booyah Pass ak abonnman Free Fire. Menm peman NatCash.</p>
+    <div class="packs" id="passes"></div>
+
+    <section class="panel" id="checkout" hidden aria-live="polite"></section>
+
+    <h2>Èd ak nouvèl</h2>
+    <div class="cards">
+      <div class="card">
+        <h3>Bezwen yon tuto?</h3>
+        <p>Si w pa konn kijan pou w rechaje kont ou, nou moutre w pas ak pas sou WhatsApp.</p>
+        <p style="color:var(--fg);margin-bottom:10px">Nimewo: <b id="tutoNum">40965568</b></p>
+        <a class="btn wa" id="tutoLink" target="_blank" rel="noopener">Mande tuto sou WhatsApp</a>
+      </div>
+      <div class="card">
+        <h3>Chanèl WhatsApp</h3>
+        <p>Suivre la chaîne italientopup.Com sur WhatsApp pou w jwenn nouvèl, pwomosyon ak nouvo pri.</p>
+        <a class="btn ghost" href="https://whatsapp.com/channel/0029Vb96d7zLNSZxQVOzZl00" target="_blank" rel="noopener">Rejwenn chanèl la</a>
+      </div>
+    </div>
+  </main>
+
+  <main id="view-profile" hidden>
+    <h2 style="margin-top:14px">Pwofil mwen</h2>
+    <p class="sub">Kòmand ou yo ki sou aparèy sa a. Gade si peman ou an ap verifye.</p>
+    <div class="stats" id="stats"></div>
+    <div class="panel" style="margin-top:0">
+      <b>Pwomosyon 500 → 1000 dyaman</b>
+      <div class="bar"><i id="barFill" style="width:0%"></i></div>
+      <small id="barText" style="color:var(--muted)"></small>
+    </div>
+    <div class="orders" id="orders"></div>
+  </main>
+
+  <footer>
+    <div><b>Italien Top Up</b> · italientopup.com</div>
+    <div>Tuto ak sipò WhatsApp: <b>40965568</b></div>
+    <div>Imèl: <b>frantzolivier27@gmail.com</b></div>
+    <div>Peman kat kredi ap vini byento.</div>
+  </footer>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function () {
+  var PACKS = [
+    { d: 110, g: 155 },
+    { d: 341, g: 485 },
+    { d: 572, g: 845 },
+    { d: 1166, g: 1680 },
+    { d: 2398, g: 2990 },
+    { d: 6160, g: 7990, best: true }
+  ];
+  var PASSES = [
+    { name: "Booyah Pass", g: 500, note: "Pass Free Fire" },
+    { name: "Abonnman Semèn", g: 400, note: "Abonnman Free Fire pou 1 semèn" },
+    { name: "Abonnman Mwa", g: 1700, note: "Abonnman Free Fire pou 1 mwa" }
+  ];
+  function titleOf(p) { return p.d ? fmt(p.d) + " dyaman" : p.name; }
+  var NATCASH = "40965568";
+  var WA_NUM = "509" + NATCASH;
+  var KEY = "itu_orders_v1";
+  var $ = function (id) { return document.getElementById(id); };
+  var fmt = function (n) { return n.toLocaleString("fr-FR").replace(/ /g, " "); };
+
+  function load() { try { return JSON.parse(localStorage.getItem(KEY) || "[]"); } catch (e) { return []; } }
+  function save(list) {
+    try { localStorage.setItem(KEY, JSON.stringify(list)); return; } catch (e) {}
+    list.forEach(function (o, i) { if (i > 0) delete o.proof; });
+    try { localStorage.setItem(KEY, JSON.stringify(list)); return; } catch (e) {}
+    if (list[0]) delete list[0].proof;
+    try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) {}
+  }
+  var orders = load();
+  var current = null;
+  var proof = null;
+
+  function onProof(ev) {
+    var f = ev.target.files && ev.target.files[0];
+    var err = $("err");
+    if (!f) return;
+    if (!/^image\//.test(f.type)) { err.textContent = "Chwazi yon foto (JPG oswa PNG)."; return; }
+    var url = URL.createObjectURL(f), img = new Image();
+    img.onload = function () {
+      var s = Math.min(1, 900 / Math.max(img.width, img.height));
+      var c = document.createElement("canvas");
+      c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+      c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      proof = c.toDataURL("image/jpeg", 0.7);
+      URL.revokeObjectURL(url);
+      var p = $("proofPrev"); p.src = proof; p.hidden = false;
+      $("dropText").textContent = "Foto a chwazi. Peze pou chanje l.";
+      err.textContent = "";
+    };
+    img.onerror = function () { URL.revokeObjectURL(url); err.textContent = "Foto sa a pa ka louvri. Eseye yon lòt."; };
+    img.src = url;
+  }
+
+  function gem(size) {
+    return '<svg class="gem" width="' + size + '" height="' + size + '" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,6 92,36 50,94 8,36" fill="url(#lg)"/><polygon points="50,6 70,36 50,94 30,36" fill="#fff" opacity=".25"/><polyline points="8,36 92,36" stroke="#fff" stroke-opacity=".5" stroke-width="2" fill="none"/></svg>';
+  }
+
+  function toast(msg) {
+    var t = $("toast"); t.textContent = msg; t.classList.add("show");
+    clearTimeout(toast.h); toast.h = setTimeout(function () { t.classList.remove("show"); }, 2200);
+  }
+
+  function copy(text) {
+    function fallback() {
+      var i = document.createElement("input"); i.value = text; document.body.appendChild(i); i.select();
+      try { document.execCommand("copy"); toast("Nimewo kopye"); } catch (e) { toast("Kopye: " + text); }
+      document.body.removeChild(i);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { toast("Nimewo kopye"); }, fallback);
+    } else fallback();
+  }
+
+  function waLink(text) { return "https://wa.me/" + WA_NUM + (text ? "?text=" + encodeURIComponent(text) : ""); }
+
+  /* packs */
+  var packsEl = $("packs");
+  packsEl.innerHTML = PACKS.map(function (p, i) {
+    var per = (p.g / p.d * 100).toFixed(0);
+    return '<article class="pack"' + (p.best ? ' data-best="1"' : "") + '>' +
+      (p.best ? '<span class="tag">PI AVANTAJ</span>' : "") + gem(46) +
+      '<div class="num">' + fmt(p.d) + '</div><div class="unit">dyaman</div>' +
+      '<div class="price">' + fmt(p.g) + ' G</div>' +
+      '<div class="rate"></div>' +
+      '<button class="btn" data-i="' + i + '">Achte pake sa</button></article>';
+  }).join("");
+  packsEl.addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-i]"); if (!b) return;
+    openCheckout(PACKS[+b.getAttribute("data-i")]);
+  });
+
+  function star(size) {
+    return '<svg class="gem" width="' + size + '" height="' + size + '" viewBox="0 0 100 100" aria-hidden="true"><polygon points="50,6 61,38 95,38 67,58 78,92 50,72 22,92 33,58 5,38 39,38" fill="#ffc247"/><polygon points="50,6 61,38 50,72 22,92 33,58 5,38 39,38" fill="#fff" opacity=".25"/></svg>';
+  }
+  var passesEl = $("passes");
+  passesEl.innerHTML = PASSES.map(function (p, i) {
+    return '<article class="pack">' + star(46) +
+      '<div class="num" style="font-size:24px;line-height:1.2">' + p.name + '</div>' +
+      '<div class="unit" style="letter-spacing:.04em;text-transform:none;font-size:13px">' + p.note + '</div>' +
+      '<div class="price">' + fmt(p.g) + ' G</div>' +
+      '<div class="rate"></div>' +
+      '<button class="btn" data-j="' + i + '">Achte sa a</button></article>';
+  }).join("");
+  passesEl.addEventListener("click", function (e) {
+    var b = e.target.closest("button[data-j]"); if (!b) return;
+    openCheckout(PASSES[+b.getAttribute("data-j")]);
+  });
+
+  /* checkout */
+  function openCheckout(p) {
+    current = p; proof = null;
+    var el = $("checkout"); el.hidden = false;
+    el.innerHTML =
+      '<div class="summary">' + gem(44) + '<div><b>' + titleOf(p) + '</b><span>' + fmt(p.g) + ' G</span></div></div>' +
+      '<div class="checkout-grid"><div>' +
+      '<h3 style="margin:0 0 8px">Kijan pou w peye</h3><ol class="steps">' +
+      '<li><div>Ouvri NatCash epi voye <b>' + fmt(p.g) + ' G</b> sou nimewo sa a:<div class="numbox"><code>' + NATCASH + '</code><button class="btn ghost" type="button" id="copyNum">Kopye</button></div></div></li>' +
+      '<li><div>Kopye <b>kòd tranzaksyon an</b> NatCash ba w.</div></li>' +
+      '<li><div>Ranpli fòm nan, mete kòd la epi voye kòmand lan.</div></li></ol>' +
+      '</div><form id="orderForm" novalidate>' +
+      '<label for="uid">ID jwè Free Fire <small>(chif yo sèlman)</small></label>' +
+      '<input id="uid" inputmode="numeric" autocomplete="off" placeholder="egzanp: 1234567890">' +
+      '<label for="code">Kòd tranzaksyon NatCash</label>' +
+      '<input id="code" autocomplete="off" placeholder="Kòd ou resevwa a" style="text-transform:uppercase">' +
+      '<label for="proof">Foto prèv peman <small>(screenshot NatCash ki montre kote w voye kòb la)</small></label>' +
+      '<label class="drop" for="proof"><span id="dropText">Peze la pou chwazi foto a</span><img id="proofPrev" alt="Apèsi foto peman an" hidden></label>' +
+      '<input id="proof" type="file" accept="image/*" hidden>' +
+      '<p class="err" id="err" role="alert"></p>' +
+      '<button class="btn gold" type="submit" style="width:100%;margin-top:6px">Voye kòmand lan</button>' +
+      '</form></div>';
+    $("copyNum").onclick = function () { copy(NATCASH); };
+    $("orderForm").addEventListener("submit", submitOrder);
+    $("proof").addEventListener("change", onProof);
+    el.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function submitOrder(e) {
+    e.preventDefault();
+    var uid = $("uid").value.replace(/\s/g, "");
+    var name = "";
+    var code = $("code").value.trim().toUpperCase();
+    var err = $("err");
+    if (!/^\d{6,14}$/.test(uid)) { err.textContent = "ID jwè a dwe gen 6 a 14 chif."; $("uid").focus(); return; }
+    if (!proof) { err.textContent = "Mete foto prèv peman an (screenshot NatCash)."; return; }
+    if (!/^[A-Z0-9\-]{5,30}$/.test(code)) { err.textContent = "Mete kòd tranzaksyon an kòrèkteman (5 karaktè oswa plis)."; $("code").focus(); return; }
+    if (orders.some(function (o) { return o.code === code; })) { err.textContent = "Kòd sa a deja itilize sou aparèy sa a."; return; }
+    var order = { id: Date.now(), d: current.d || 0, label: titleOf(current), g: current.g, uid: uid, name: name, code: code, proof: proof, status: "wait" };
+    orders.unshift(order); save(orders); renderProfile();
+    var msg = "Bonjou Italien Top Up. Mwen fè yon kòmand:\n" + order.label + " Free Fire (" + fmt(order.g) + " G)\nID jwè: " + uid + (name ? "\nNon: " + name : "") + "\nKòd tranzaksyon NatCash: " + code;
+    $("checkout").innerHTML =
+      '<div class="done">' + gem(64) + '<h3>Kòmand ou anrejistre</h3>' +
+      '<p style="color:var(--muted);margin:0">' + order.label + ' pou ID ' + uid + '. Nou ap verifye peman an.</p>' +
+      '<div class="thanks">Mèsi deskèw chwazi nou! Depi w voye 20 moun top up pou pi piti 500 dyaman, w ap benefisye 1000 dyaman.</div>' +
+      '<div class="row-btns"><a class="btn wa" target="_blank" rel="noopener" href="' + waLink(msg) + '">Voye kòmand lan sou WhatsApp</a>' +
+      '<button class="btn ghost" type="button" id="goProfile">Wè pwofil mwen</button></div>' +
+      '<p style="color:var(--muted);font-size:13px;margin:12px 0 0">Voye mesaj WhatsApp lan, epi voye menm foto prèv la nan konvèsasyon an pou nou rechaje pi vit.</p></div>';
+    $("goProfile").onclick = function () { show("profile"); };
+  }
+
+  /* profile */
+  function renderProfile() {
+    var total = orders.reduce(function (s, o) { return s + o.d; }, 0);
+    var spent = orders.reduce(function (s, o) { return s + o.g; }, 0);
+    var big = orders.filter(function (o) { return o.d >= 500; }).length;
+    $("stats").innerHTML =
+      '<div class="stat"><b>' + orders.length + '</b><span>Kòmand</span></div>' +
+      '<div class="stat"><b>' + fmt(total) + '</b><span>Dyaman kòmande</span></div>' +
+      '<div class="stat"><b>' + fmt(spent) + ' G</b><span>Total peye</span></div>';
+    var shown = Math.min(big, 20);
+    $("barFill").style.width = (shown / 20 * 100) + "%";
+    $("barText").textContent = shown + " sou 20 top up (500 dyaman oswa plis). " + (big >= 20 ? "Ou kalifye pou 1000 dyaman bonis! Ekri nou sou WhatsApp." : "Rete " + (20 - shown) + " pou jwenn 1000 dyaman.");
+    $("orders").innerHTML = orders.length ? orders.map(function (o) {
+      var dt = new Date(o.id).toLocaleString("fr-FR", { dateStyle: "short", timeStyle: "short" });
+      return '<div class="order"><b>' + (o.label || (fmt(o.d) + ' dyaman')) + ' · ' + fmt(o.g) + ' G</b><span class="pill">An verifikasyon</span>' +
+        '<small>ID ' + o.uid + (o.name ? " · " + esc(o.name) : "") + '</small><small>' + dt + '</small>' +
+        '<small>Kòd: ' + esc(o.code) + '</small>' +
+        (o.proof ? '<img class="thumb" src="' + o.proof + '" alt="Prèv peman">' : '') + '</div>';
+    }).join("") : '<div class="empty">Ou poko gen kòmand. Ale nan Boutik pou chwazi yon pake.</div>';
+  }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
+
+  /* tabs */
+  function show(which) {
+    var shop = which === "shop";
+    $("view-shop").hidden = !shop; $("view-profile").hidden = shop;
+    $("tab-shop").setAttribute("aria-selected", shop); $("tab-profile").setAttribute("aria-selected", !shop);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  $("tab-shop").onclick = function () { show("shop"); };
+  $("tab-profile").onclick = function () { show("profile"); };
+
+  $("tutoLink").href = waLink("Bonjou, mwen bezwen yon tuto pou m rechaje kont Free Fire mwen.");
+  renderProfile();
+})();
+</script>
+
+</html>
